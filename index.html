@@ -1,85 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Lead Scout Demo | Takayama AI</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding: 0 20px;
-        }
-        .badge {
-            background-color: #e8f0fe;
-            color: #1a73e8;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            color: #1a73e8;
-            margin: 0 0 16px 0;
-        }
-        p {
-            font-size: 1.1rem;
-            color: #5f6368;
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .instructions {
-            font-weight: 600;
-            color: #333;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northern Arena — Birthday Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #0d1b2a;
+    font-family: 'Barlow', sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
+  }
+
+  /* HEADER */
+  .header {
+    width: 100%;
+    background: transparent;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { height: 34px; }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+
+  /* CARD */
+  .card {
+    width: 100%;
+    max-width: 400px;
+    margin: 12px 16px 0;
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    color: #0d1b2a;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  }
+
+  /* CUSTOMER SECTION */
+  .customer {
+    padding: 36px 28px 28px;
+    text-align: center;
+  }
+
+  .coffee-icon {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    margin: 0 auto 18px;
+    box-shadow: 0 4px 16px rgba(15,76,117,0.15);
+  }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: #0f4c75;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 1.0;
+    color: #0d1b2a;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtext {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  /* Days left pill */
+  .days-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #0f4c75, #1b6ca8);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    padding: 8px 20px;
+    border-radius: 30px;
+    margin-bottom: 8px;
+  }
+  .days-left .pulse {
+    width: 8px; height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(74,222,128,0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+    70%  { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  }
+
+  .fine-print {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 10px;
+  }
+
+  /* STAFF DIVIDER */
+  .staff-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    margin: 4px 0 0;
+  }
+  .staff-divider .line {
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+  .staff-divider .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    white-space: nowrap;
+  }
+
+  /* STAFF SECTION */
+  .staff-section {
+    background: #f1f5f9;
+    padding: 16px 20px 20px;
+    border-top: 2px dashed #cbd5e1;
+    margin-top: 4px;
+  }
+  .staff-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .staff-tag {
+    background: #0f4c75;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 4px;
+  }
+  .staff-hint {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .redeem-btn {
+    width: 100%;
+    padding: 14px;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    opacity: 0.8;
+  }
+  .redeem-btn:hover { background: #d1d5db; color: #6b7280; opacity: 1; transform: translateY(-1px); }
+  .redeem-btn:active { transform: translateY(0); }
+  .redeem-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+  /* STATES */
+  .state-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    margin: 0 auto 16px;
+  }
+  .stamp {
+    display: inline-block;
+    border: 3px solid #ea580c;
+    color: #ea580c;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 0.12em;
+    padding: 6px 20px;
+    border-radius: 4px;
+    transform: rotate(-8deg);
+    margin-bottom: 14px;
+  }
+  .eyebrow.used-label { color: #ea580c; }
+  .eyebrow.expired-label { color: #6b7280; }
+  .eyebrow.early-label { color: #2563eb; }
+  .eyebrow.error-label { color: #dc2626; }
+
+  /* Loading */
+  .loading {
+    padding: 60px 28px;
+    text-align: center;
+  }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #0f4c75;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Confirm overlay */
+  .confirm-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,27,42,0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+  .confirm-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    color: #0d1b2a;
+  }
+  .confirm-box .confirm-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+  .confirm-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: #0f4c75;
+  }
+  .confirm-box p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .confirm-actions { display: flex; gap: 10px; }
+  .confirm-actions button {
+    flex: 1; padding: 13px;
+    border-radius: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+  }
+  .btn-cancel { background: #f1f5f9; color: #64748b; }
+  .btn-confirm { background: #0f4c75; color: #fff; }
+  .btn-confirm:disabled { opacity: 0.6; cursor: default; }
+
+  /* Footer */
+  .footer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+  .footer a { color: rgba(255,255,255,0.8); }
+
+  .hidden { display: none !important; }
+</style>
 </head>
 <body>
 
-    <!-- Main Page Content -->
-    <div class="badge">Universal Gym Edition</div>
-    <h1>Fitness SDR Demo</h1>
-    <p>Gidday! This is a live demonstration of the Takayama AI Lead Scout tailored for fitness centers and gyms.</p>
-    <p class="instructions">Look for the chat bubble in the bottom right corner to start the conversation.</p>
-    <p>Try asking about class timetables, membership pricing, or facility hours to see the conversational sales logic in action.</p>
+<div class="header">
+  <img class="logo" src="data:image/avif;base64,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" alt="Northern Arena">
+  <span class="badge">🎂 Birthday Offer</span>
+</div>
 
-    <!-- Dialogflow Integration Code -->
-    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <df-messenger
-      project-id="arena-scout-492406"
-      agent-id="26a84805-4e47-4747-b321-abee73640543"
-      language-code="en"
-      max-query-length="-1">
-      <df-messenger-chat-bubble
-        chat-title="Digital Concierge">
-      </df-messenger-chat-bubble>
-    </df-messenger>
-    <style>
-      df-messenger {
-        z-index: 999;
-        position: fixed;
-        --df-messenger-font-color: #000;
-        --df-messenger-font-family: Google Sans;
-        --df-messenger-chat-background: #f3f6fc;
-        --df-messenger-message-user-background: #d3e3fd;
-        --df-messenger-message-bot-background: #fff;
-        bottom: 16px;
-        right: 16px;
-      }
-    </style>
+<div class="card" id="card">
 
+  <!-- Loading -->
+  <div id="state-loading" class="loading">
+    <div class="spinner"></div>
+    <p style="color:#6b7280;font-size:14px;">Checking your offer…</p>
+  </div>
+
+  <!-- Valid -->
+  <div id="state-valid" class="hidden">
+    <div class="customer">
+      <div class="coffee-icon">☕</div>
+      <div class="eyebrow">Happy Birthday, <span id="first-name"></span>! 🎉</div>
+      <div class="headline">One Free Coffee,<br>On Us</div>
+      <p class="subtext">Show this screen at the café counter to claim your free coffee.</p>
+      <div class="days-left"><span class="pulse"></span> <span id="days-text"></span></div>
+      <p class="fine-print">One per member · Non-transferable</p>
+    </div>
+
+  </div>
+
+  <!-- Used -->
+  <div id="state-used" class="hidden">
+    <div class="customer" style="padding-bottom:40px;">
+      <div class="state-icon" style="background:#fff7ed;">🎫</div>
+      <div class="stamp">REDEEMED</div>
+      <div class="eyebrow used-label">Already Claimed</div>
+      <div class="headline">This Voucher<br>Has Been Used</div>
+      <p class="subtext">This birthday coffee has already been redeemed. See you next year! 🎂</p>
+    </div>
+  </div>
+
+  <!-- Expired -->
+  <div id="state-expired" class="hidden">
+    <div class="customer" style="padding-bottom:40px;">
+      <div class="state-icon" style="background:#f9fafb;">⏰</div>
+      <div class="eyebrow expired-label">Offer Expired</div>
+      <div class="headline">This Offer<br>Has Expired</div>
+      <p class="subtext">Your birthday offer has passed. Hope you had an amazing birthday!</p>
+    </div>
+  </div>
+
+  <!-- Too early -->
+  <div id="state-early" class="hidden">
+    <div class="customer" style="padding-bottom:40px;">
+      <div class="state-icon" style="background:#eff6ff;">📅</div>
+      <div class="eyebrow early-label">Not Yet Active</div>
+      <div class="headline">Almost Time!</div>
+      <p class="subtext">Your birthday offer isn't active yet — check back closer to your birthday.</p>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div id="state-error" class="hidden">
+    <div class="customer" style="padding-bottom:40px;">
+      <div class="state-icon" style="background:#fef2f2;">❗</div>
+      <div class="eyebrow error-label">Something Went Wrong</div>
+      <div class="headline">We Hit a Snag</div>
+      <p class="subtext">We couldn't find your birthday offer. Please ask at reception and we'll sort it out.</p>
+      <p style="font-size:13px;color:#9ca3af;margin-top:12px;">📞 <a href="tel:094219700" style="color:#0f4c75;">09 421 9700</a> · <a href="mailto:info@northernarena.co.nz" style="color:#0f4c75;">info@northernarena.co.nz</a></p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Questions? Ask at reception or call <a href="tel:094219700">09 421 9700</a>
+  <div style="margin-top:10px;font-size:11px;color:#c4c9cf;cursor:pointer;user-select:none;" onclick="askPin()">Staff use only</div>
+</div>
+
+<!-- Confirm overlay -->
+<div class="confirm-overlay hidden" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">☕</div>
+    <h3>Confirm Redemption</h3>
+    <p>Mark this free coffee as redeemed for <strong id="confirm-name"></strong>?<br>This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="hideConfirm()">Cancel</button>
+      <button class="btn-confirm" id="confirm-btn" onclick="doRedeem()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Staff PIN overlay -->
+<div class="confirm-overlay hidden" id="pin-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🔒</div>
+    <h3>Staff PIN</h3>
+    <p>Enter the café staff PIN to redeem this voucher.</p>
+    <input type="password" id="pin-input" inputmode="numeric" maxlength="4" autocomplete="off"
+      style="width:120px;padding:10px;font-size:24px;text-align:center;letter-spacing:8px;border:1.5px solid #d1d5db;border-radius:10px;margin:6px 0 4px;outline:none;"
+      onkeydown="if(event.key==='Enter')checkPin()">
+    <p id="pin-error" class="hidden" style="color:#dc2626;font-size:13px;margin:4px 0 0;">Incorrect PIN</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="hidePin()">Cancel</button>
+      <button class="btn-confirm" onclick="checkPin()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://hmkiifaoekucqnwuywwc.supabase.co/rest/v1/redemptions";
+const SUPABASE_KEY = "sb_publishable_VPNft0Udnl4A32QKEgILGA_POn1nXYr";
+
+const params = new URLSearchParams(window.location.search);
+const memberId = params.get("member");
+
+let rowId = null;
+let memberName = "";
+
+function showState(id) {
+  ["state-loading","state-valid","state-used","state-expired","state-early","state-error"].forEach(s => {
+    document.getElementById(s).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function daysText(expiry) {
+  const now = new Date();
+  const diff = Math.ceil((expiry - now) / (1000 * 60 * 60 * 24));
+  if (diff <= 0) return "Expires today";
+  if (diff === 1) return "1 day left to redeem";
+  return diff + " days left to redeem";
+}
+
+async function init() {
+  if (!memberId) { showState("state-error"); return; }
+
+  const year = new Date().getFullYear();
+  const url = `${SUPABASE_URL}?contact_id=eq.${encodeURIComponent(memberId)}&year=eq.${year}&order=created_at.desc&limit=1`;
+
+  try {
+    const res = await fetch(url, {
+      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" }
+    });
+    const data = await res.json();
+
+    if (!data || data.length === 0) { showState("state-error"); return; }
+
+    const row = data[0];
+    rowId = row.id;
+    memberName = row.first_name || "there";
+
+    if (row.redeemed) { showState("state-used"); return; }
+
+    const created = new Date(row.created_at);
+    const expiry = new Date(created);
+    expiry.setDate(expiry.getDate() + 10);
+    const now = new Date();
+
+    if (now > expiry) { showState("state-expired"); return; }
+
+    document.getElementById("first-name").textContent = memberName;
+    document.getElementById("confirm-name").textContent = memberName;
+    document.getElementById("days-text").textContent = daysText(expiry);
+    showState("state-valid");
+
+  } catch(e) {
+    showState("state-error");
+  }
+}
+
+const STAFF_PIN = "2468"; // ← change this, then tell café staff
+
+function askPin() {
+  // Only makes sense on a valid, unredeemed voucher
+  if (document.getElementById("state-valid").classList.contains("hidden")) return;
+  document.getElementById("pin-input").value = "";
+  document.getElementById("pin-error").classList.add("hidden");
+  document.getElementById("pin-overlay").classList.remove("hidden");
+  document.getElementById("pin-input").focus();
+}
+
+function hidePin() {
+  document.getElementById("pin-overlay").classList.add("hidden");
+}
+
+function checkPin() {
+  const entered = document.getElementById("pin-input").value.trim();
+  if (entered === STAFF_PIN) {
+    hidePin();
+    showConfirm();
+  } else {
+    document.getElementById("pin-error").classList.remove("hidden");
+    document.getElementById("pin-input").value = "";
+    document.getElementById("pin-input").focus();
+  }
+}
+
+function showConfirm() {
+  document.getElementById("confirm-overlay").classList.remove("hidden");
+}
+
+function hideConfirm() {
+  document.getElementById("confirm-overlay").classList.add("hidden");
+}
+
+async function doRedeem() {
+  const btn = document.getElementById("confirm-btn");
+  btn.disabled = true;
+  btn.textContent = "Confirming…";
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}?id=eq.${rowId}`, {
+      method: "PATCH",
+      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ redeemed: true, redeemed_at: new Date().toISOString() })
+    });
+
+    if (res.ok) {
+      hideConfirm();
+      showState("state-used");
+    } else {
+      btn.disabled = false;
+      btn.textContent = "Confirm";
+      alert("Something went wrong. Please try again.");
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = "Confirm";
+    alert("Something went wrong. Please try again.");
+  }
+}
+
+init();
+</script>
 </body>
 </html>
